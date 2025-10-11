@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kailan Massas 🍕</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🍕 Kailan Massas 🍔</h1>
+    <nav>
+      <button class="menu-btn" data-category="tradicionais">🍕 Pizzas Tradicionais</button>
+      <button class="menu-btn" data-category="especiais">⭐ Pizzas Especiais</button>
+      <button class="menu-btn" data-category="lanches">🍔 Lanches</button>
+      <button class="menu-btn" data-category="salgadinhos">🥟 Salgadinhos</button>
+      <button class="menu-btn" data-category="omeletes">🍳 Omeletes</button>
+      <button class="menu-btn" data-category="bebidas">🥤 Bebidas</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="menu">
+      <h2>Escolha uma categoria acima 👆</h2>
+      <img id="banner-img" src="https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg" alt="banner" class="banner">
+    </section>
+
+    <aside id="carrinho">
+      <h2>🛒 Seu Carrinho</h2>
+      <ul id="itens-carrinho"></ul>
+      <p id="total">Total: R$ 0,00</p>
+      <button id="finalizar">Finalizar Pedido</button>
+    </aside>
+  </main>
+
+  <section id="dados-cliente" class="hidden">
+    <h2>📋 Dados do Cliente</h2>
+    <form id="form-dados">
+      <label>Nome: <input type="text" id="nome" required></label>
+      <label>Endereço: <input type="text" id="endereco" required></label>
+      <label>Rua: <input type="text" id="rua" required></label>
+      <label>Ponto de Referência: <input type="text" id="referencia"></label>
+      <label>Forma de Pagamento:
+        <select id="pagamento" required>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão">Cartão</option>
+          <option value="Pix">Pix</option>
+        </select>
+      </label>
+      <button type="submit">Gerar Nota</button>
+    </form>
+  </section>
+
+  <section id="nota" class="hidden">
+    <h2>🧾 Nota do Pedido</h2>
+    <div id="nota-conteudo"></div>
+    <button id="imprimir">🖨️ Imprimir</button>
+    <button id="enviar">💬 Enviar via WhatsApp</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
