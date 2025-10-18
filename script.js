@@ -8,7 +8,7 @@ const notaConteudo = document.getElementById("nota-conteudo");
 
 let carrinho = [];
 let total = 0;
-const shopPhone = "5599999999999"; // substitua pelo número real
+const shopPhone = "5561983043534"; // substitua pelo número real
 
 // função para calcular taxa de entrega conforme horário
 function calcularTaxaEntrega() {
@@ -199,3 +199,4 @@ document.getElementById("enviar").addEventListener("click",()=>{
   const url = `https://wa.me/${shopPhone}?text=${encodeURIComponent(msg)}`;
   window.open(url);
 });
+
