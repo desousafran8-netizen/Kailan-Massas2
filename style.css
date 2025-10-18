@@ -15,8 +15,14 @@ header {
   color: white;
   text-align: center;
   padding: 20px 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
   position: sticky;
   top: 0;
+}
+
+header h1 {
+  font-size: 2rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 nav {
@@ -24,16 +30,19 @@ nav {
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .menu-btn {
   background: #fcbf49;
   border: none;
+  color: #000;
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   transition: 0.3s;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .menu-btn:hover {
@@ -43,8 +52,8 @@ nav {
 
 main {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
+  flex-wrap: wrap;
   padding: 20px;
   gap: 20px;
 }
@@ -53,11 +62,13 @@ main {
   width: 100%;
   max-height: 200px;
   border-radius: 10px;
+  margin-top: 15px;
   object-fit: cover;
 }
 
 #menu {
   flex: 2;
+  animation: fadeIn 0.6s ease-in;
 }
 
 .item {
@@ -66,10 +77,20 @@ main {
   padding: 15px;
   margin-bottom: 15px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: 0.3s;
+}
+
+.item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .item h3 {
   color: #d62828;
+}
+
+.item strong {
+  color: #f77f00;
 }
 
 .item button {
@@ -84,6 +105,13 @@ main {
 
 .item button:hover {
   background: #f77f00;
+  transform: scale(1.05);
+}
+
+.item select {
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 #carrinho {
@@ -91,6 +119,7 @@ main {
   background: #fff3cd;
   padding: 15px;
   border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 #finalizar {
@@ -100,101 +129,82 @@ main {
   padding: 10px;
   border-radius: 8px;
   width: 100%;
+  margin-top: 10px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 #finalizar:hover {
   background: #d62828;
+  transform: scale(1.05);
 }
 
 .hidden {
   display: none;
 }
 
-/* FORMULÁRIO */
-#dados-cliente {
+#dados-cliente,
+#nota {
   background: white;
   padding: 20px;
   margin: 20px;
   border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+#dados-cliente label {
+  display: block;
+  margin-bottom: 10px;
 }
 
 #dados-cliente input,
-#dados-cliente select {
+select {
   width: 100%;
-  margin-bottom: 10px;
   padding: 8px;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  border: 1px solid #ccc;
 }
 
-/* NOTA FISCAL */
-.nota-fiscal {
-  background: white;
-  width: 90%;
-  margin: 40px auto;
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.3);
-  font-size: 1.3rem;
+#dados-cliente button,
+#nota button {
+  background: #d62828;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.nota-fiscal h1 {
-  text-align: center;
-  color: #d62828;
-  margin-bottom: 10px;
+#dados-cliente button:hover,
+#nota button:hover {
+  background: #f77f00;
+  transform: scale(1.05);
 }
 
-.nota-fiscal .logo {
-  display: block;
-  width: 120px;
-  margin: 0 auto 10px;
-}
-
-.nota-fiscal hr {
-  margin: 20px 0;
-  border: 1px solid #ccc;
-}
-
-.nota-fiscal ul {
-  list-style: none;
-  margin-top: 10px;
-}
-
-.nota-fiscal li {
+#info-entrega {
+  font-size: 0.9rem;
+  color: #444;
   margin-bottom: 8px;
 }
 
-.rodape {
-  text-align: center;
-  font-weight: bold;
-  color: #f77f00;
-  margin-top: 20px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* IMPRESSÃO EM A2 */
-@media print {
-  @page {
-    size: A2;
-    margin: 2cm;
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
   }
 
-  body * {
-    visibility: hidden;
-  }
-
-  .nota-fiscal, .nota-fiscal * {
-    visibility: visible;
-  }
-
-  .nota-fiscal {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
-
-  #imprimir, #enviar {
-    display: none;
+  #carrinho {
+    order: -1;
   }
 }
