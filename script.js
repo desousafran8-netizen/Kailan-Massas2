@@ -9,7 +9,7 @@ const notaConteudo = document.getElementById("nota-conteudo");
 
 let carrinho = [];
 let total = 0;
-const shopPhone = "5599999999999"; // coloque o número do WhatsApp
+const shopPhone = "5561983043534"; // coloque o número do WhatsApp
 
 function calcularTaxaEntrega() {
   const agora = new Date();
@@ -141,3 +141,4 @@ document.getElementById("enviar").addEventListener("click", () => {
   const link = `https://wa.me/${shopPhone}?text=${encodeURIComponent(texto)}`;
   window.open(link, "_blank");
 });
+
