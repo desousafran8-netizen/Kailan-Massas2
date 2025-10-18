@@ -9,7 +9,7 @@ const notaConteudo = document.getElementById("nota-conteudo");
 let carrinho = [];
 let total = 0;
 let taxaEntrega = 3.00;
-const shopPhone = "5599999999999"; // Coloque o número real
+const shopPhone = "5561983043534"; // Coloque o número real
 
 // ===== Taxa de entrega conforme horário =====
 function atualizarTaxaEntrega() {
@@ -116,3 +116,4 @@ document.getElementById("enviar").addEventListener("click", () => {
   const url = `https://wa.me/${shopPhone}?text=${encodeURIComponent(msg)}`;
   window.open(url);
 });
+
