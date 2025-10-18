@@ -1,106 +1,73 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f8f8f8;
-  color: #333;
-  margin: 0;
-  padding: 0;
-}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kailan Massas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🍕 Kailan Massas</h1>
+    <p>Monte seu pedido e gere sua nota fiscal</p>
+  </header>
 
-header {
-  background: #c0392b;
-  color: white;
-  text-align: center;
-  padding: 20px;
-}
+  <main>
+    <section id="banners">
+      <img id="banner-img" src="https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg" alt="banner">
+    </section>
 
-h1 {
-  margin: 0;
-}
+    <nav>
+      <button class="menu-btn" data-category="bebidas">Bebidas</button>
+    </nav>
 
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  background: #e74c3c;
-  padding: 10px;
-}
+    <section id="menu"></section>
 
-.menu-btn {
-  background: white;
-  border: none;
-  margin: 5px;
-  padding: 10px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
-}
+    <section id="carrinho">
+      <h2>🛒 Carrinho</h2>
+      <ul id="itens-carrinho"></ul>
+      <p id="total">Subtotal: R$ 0,00</p>
+      <button id="finalizar">Finalizar Pedido</button>
+    </section>
 
-.menu-btn:hover {
-  background: #ffe6e6;
-}
+    <section id="dados-cliente" class="hidden">
+      <h2>Dados do Cliente</h2>
+      <form id="form-dados">
+        <label>Nome:</label>
+        <input type="text" id="nome" required>
 
-#menu {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 10px;
-  padding: 20px;
-}
+        <label>Endereço:</label>
+        <input type="text" id="endereco" required>
 
-.item {
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
+        <label>Rua:</label>
+        <input type="text" id="rua" required>
 
-.item h3 {
-  margin-top: 0;
-}
+        <label>Referência:</label>
+        <input type="text" id="referencia">
 
-.item button {
-  background: #27ae60;
-  color: white;
-  border: none;
-  padding: 8px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
+        <label>Forma de Pagamento:</label>
+        <select id="pagamento" required>
+          <option>Dinheiro</option>
+          <option>Pix</option>
+          <option>Cartão</option>
+        </select>
 
-.item button:hover {
-  background: #1e8449;
-}
+        <button type="submit">Gerar Nota</button>
+      </form>
+    </section>
 
-#carrinho, #dados-cliente, #nota {
-  background: white;
-  margin: 15px;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
+    <section id="nota" class="hidden">
+      <h2>🧾 Nota Fiscal</h2>
+      <div id="nota-conteudo"></div>
+      <button id="imprimir">Imprimir</button>
+      <button id="enviar">Enviar WhatsApp</button>
+    </section>
+  </main>
 
-#finalizar, #imprimir, #enviar {
-  background: #c0392b;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin-top: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-}
+  <footer>
+    <p>© 2025 Kailan Massas - Sistema de Pedidos Online</p>
+  </footer>
 
-#finalizar:hover, #imprimir:hover, #enviar:hover {
-  background: #922b21;
-}
-
-.hidden {
-  display: none;
-}
-
-footer {
-  background: #333;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  font-size: 0.9em;
-}
+  <script src="script.js"></script>
+</body>
+</html>
