@@ -1,181 +1,123 @@
-const menuEl = document.getElementById("menu");
-const bannerImg = document.getElementById("banner-img");
-const carrinhoEl = document.getElementById("itens-carrinho");
-const totalEl = document.getElementById("total");
-const dadosCliente = document.getElementById("dados-cliente");
-const notaSection = document.getElementById("nota");
-const notaConteudo = document.getElementById("nota-conteudo");
+const menu = document.getElementById("menu");
+const carrinho = [];
+let categoriaAtual = "";
 
-let carrinho = [];
-let total = 0;
-const shopPhone = "5561983043534"; // número da loja
-
-function calcularTaxaEntrega() {
-  const agora = new Date();
-  const h = agora.getHours() + agora.getMinutes() / 60;
-  if (h >= 7.5 && h < 18) return 2.00;
-  if (h >= 18 && h <= 22.5) return 3.00;
-  return 0.00;
-}
-let taxaEntrega = calcularTaxaEntrega();
-
-const imagens = {
-  tradicionais:"https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg",
-  especiais:"https://cdn.pixabay.com/photo/2017/11/22/19/41/pizza-2971169_1280.jpg",
-  lanches:"https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_1280.jpg",
-  salgadinhos:"https://cdn.pixabay.com/photo/2021/01/22/13/35/snack-5940811_1280.jpg",
-  omeletes:"https://cdn.pixabay.com/photo/2020/09/25/12/48/omelette-5602334_1280.jpg",
-  bebidas:"https://cdn.pixabay.com/photo/2016/03/05/22/34/coca-cola-1233243_1280.jpg"
-};
-
-// cardápio (igual ao seu)
-const cardapio = {
-  tradicionais:[{nome:"Frango", precoM:35, precoG:45, ingredientes:"Mussarela, frango, orégano"},
-    {nome:"Milho", precoM:35, precoG:45, ingredientes:"Mussarela, milho, orégano"},
-    {nome:"Mussarela", precoM:35, precoG:45, ingredientes:"Mussarela, orégano"},
-    {nome:"Presunto", precoM:35, precoG:45, ingredientes:"Mussarela, presunto, orégano"},
-    {nome:"Banana", precoM:35, precoG:45, ingredientes:"Mussarela, banana, açúcar e canela"},
-    {nome:"Marguerita", precoM:35, precoG:45, ingredientes:"Mussarela, tomate, orégano"}],
-  especiais:[
-    {nome:"Calabresa", precoM:36, precoG:46, ingredientes:"Mussarela, calabresa, orégano"},
-    {nome:"Frango com Catupiry", precoM:38, precoG:49, ingredientes:"Mussarela, frango, catupiry"},
-    {nome:"Portuguesa", precoM:38, precoG:49, ingredientes:"Presunto, calabresa, pimentão, cebola, ovo"},
-    {nome:"Moda da Casa", precoM:37, precoG:47, ingredientes:"Presunto, frango, milho, azeitona"},
-    {nome:"Americana", precoM:38, precoG:49, ingredientes:"Presunto, bacon, ovo"},
-    {nome:"Paulista", precoM:39, precoG:49, ingredientes:"Presunto, tomate, cebola, bacon"},
-    {nome:"Chocolate", precoM:36, precoG:48, ingredientes:"Chocolate"},
-    {nome:"Choconana", precoM:37, precoG:50, ingredientes:"Banana, chocolate"},
-    {nome:"Três Queijos", precoM:37, precoG:48, ingredientes:"Mussarela, catupiry, cheddar"}
+const pizzas = {
+  tradicionais: [
+    { nome: "Calabresa", preco: 30 },
+    { nome: "Mussarela", preco: 28 },
+    { nome: "Frango Catupiry", preco: 32 },
   ],
-  lanches:[{nome:"X TUDO ESPECIAL", preco:16},{nome:"Cachorro Quente na Chapa", preco:10}],
-  salgadinhos:[{nome:"Coxinha de Frango", preco:1}],
-  omeletes:[{nome:"Omelete Especial", preco:17}],
-  bebidas:[{nome:"Coca-Cola 2L", preco:15}]
+  especiais: [
+    { nome: "4 Queijos", preco: 36 },
+    { nome: "Portuguesa", preco: 35 },
+    { nome: "Bacon Especial", preco: 38 },
+  ]
 };
 
-function mostrarMenu(categoria){
-  menuEl.innerHTML = "";
-  bannerImg.src = imagens[categoria] || bannerImg.src;
+document.querySelectorAll(".menu-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const categoria = btn.dataset.categoria;
+    categoriaAtual = categoria;
+    mostrarMenu(categoria);
+  });
+});
 
-  // botão especial para pizza metade/metade
-  if (categoria === "tradicionais" || categoria === "especiais") {
-    const metadeBtn = document.createElement("button");
-    metadeBtn.textContent = "🍕 Fazer Pizza Metade a Metade";
-    metadeBtn.classList.add("menu-btn");
-    metadeBtn.addEventListener("click", abrirPizzaMetade);
-    menuEl.appendChild(metadeBtn);
+function mostrarMenu(categoria) {
+  menu.innerHTML = "";
+
+  if (categoria === "metade") {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h3>Pizza Metade/Metade 🍕</h3>
+      <p>Escolha 2 sabores (pode ser Tradicional ou Especial)</p>
+      <button onclick="escolherMetade()">Escolher Sabores</button>
+    `;
+    menu.appendChild(card);
+    return;
   }
 
-  cardapio[categoria].forEach(item=>{
-    const div = document.createElement("div");
-    div.classList.add("item");
-    let html = `<h3>${item.nome}</h3>`;
-    if(item.ingredientes) html+= `<p>${item.ingredientes}</p>`;
-    if(item.precoM && item.precoG){
-      html += `<p>Preço M: R$ ${item.precoM} | G: R$ ${item.precoG}</p>
-      <select class="tamanho">
-        <option value="M">M</option>
-        <option value="G">G</option>
-      </select>`;
-    } else html+= `<p>Preço: R$ ${item.preco}</p>`;
-    html+= `<button>Adicionar</button>`;
-    div.innerHTML = html;
-    menuEl.appendChild(div);
-
-    div.querySelector("button").addEventListener("click",()=>{
-      let preco = item.preco || item.precoM;
-      let nomeItem = item.nome;
-      const select = div.querySelector("select");
-      if(select){
-        const tamanho = select.value;
-        preco = tamanho==="M"? item.precoM : item.precoG;
-        nomeItem += ` (${tamanho})`;
-      }
-      carrinho.push({nome:nomeItem, preco});
-      atualizarCarrinho();
-    });
+  pizzas[categoria].forEach(pizza => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h3>${pizza.nome}</h3>
+      <p>R$ ${pizza.preco.toFixed(2)}</p>
+      <button onclick="adicionarCarrinho('${pizza.nome}', ${pizza.preco})">Adicionar</button>
+    `;
+    menu.appendChild(card);
   });
 }
 
-// função pizza metade/metade
-function abrirPizzaMetade(){
-  const sabores = [...cardapio.tradicionais, ...cardapio.especiais];
-  const sabor1 = prompt("Escolha o 1º sabor (ex: Frango, Calabresa):");
-  const sabor2 = prompt("Escolha o 2º sabor (ex: Marguerita, Portuguesa):");
-  const tamanho = prompt("Tamanho M ou G?");
-  if (!sabor1 || !sabor2) return alert("Selecione dois sabores válidos!");
+function escolherMetade() {
+  const todosSabores = [...pizzas.tradicionais, ...pizzas.especiais];
+  const nomes = todosSabores.map(p => p.nome).join(", ");
 
-  const p1 = sabores.find(s=>s.nome.toLowerCase()===sabor1.toLowerCase());
-  const p2 = sabores.find(s=>s.nome.toLowerCase()===sabor2.toLowerCase());
-  if (!p1 || !p2) return alert("Sabor não encontrado.");
+  const sabor1 = prompt(`Escolha o 1º sabor (${nomes})`);
+  const sabor2 = prompt(`Escolha o 2º sabor (${nomes})`);
 
-  const preco = tamanho.toUpperCase()==="G" ?
-      ((p1.precoG + p2.precoG) / 2) :
-      ((p1.precoM + p2.precoM) / 2);
+  const p1 = todosSabores.find(p => p.nome.toLowerCase() === sabor1?.toLowerCase());
+  const p2 = todosSabores.find(p => p.nome.toLowerCase() === sabor2?.toLowerCase());
 
-  carrinho.push({nome:`Pizza ${sabor1}/${sabor2} (${tamanho.toUpperCase()})`, preco});
+  if (!p1 || !p2) {
+    alert("Um dos sabores não foi encontrado. Tente novamente!");
+    return;
+  }
+
+  const precoMedio = (p1.preco + p2.preco) / 2;
+  adicionarCarrinho(`Meia ${p1.nome} + Meia ${p2.nome}`, precoMedio);
+}
+
+function adicionarCarrinho(nome, preco) {
+  carrinho.push({ nome, preco });
+  alert(`${nome} adicionada ao carrinho!`);
+}
+
+document.getElementById("ver-carrinho").addEventListener("click", () => {
+  const ctn = document.getElementById("carrinho-container");
+  ctn.classList.toggle("hidden");
   atualizarCarrinho();
-  alert("🍕 Pizza metade a metade adicionada!");
-}
+});
 
-function atualizarCarrinho(){
-  taxaEntrega = calcularTaxaEntrega();
-  carrinhoEl.innerHTML = "";
-  total = 0;
-  carrinho.forEach(i=>{
-    total += i.preco;
+function atualizarCarrinho() {
+  const lista = document.getElementById("lista-carrinho");
+  lista.innerHTML = "";
+  let total = 0;
+
+  carrinho.forEach(item => {
+    total += item.preco;
     const li = document.createElement("li");
-    li.textContent = `${i.nome} - R$ ${i.preco.toFixed(2)}`;
-    carrinhoEl.appendChild(li);
+    li.textContent = `${item.nome} - R$ ${item.preco.toFixed(2)}`;
+    lista.appendChild(li);
   });
-  const totalComEntrega = total + taxaEntrega;
-  totalEl.innerHTML = `Subtotal: R$ ${total.toFixed(2)} <br> Taxa: R$ ${taxaEntrega.toFixed(2)} <br><strong>Total: R$ ${totalComEntrega.toFixed(2)}</strong>`;
+
+  document.getElementById("total").textContent = `Total: R$ ${total.toFixed(2)}`;
 }
 
-document.querySelectorAll(".menu-btn").forEach(btn=>{
-  btn.addEventListener("click",()=>mostrarMenu(btn.dataset.category));
+document.getElementById("enviarPedido").addEventListener("click", () => {
+  const nome = document.getElementById("nome").value.trim();
+  const endereco = document.getElementById("endereco").value.trim();
+  const rua = document.getElementById("rua").value.trim();
+  const ref = document.getElementById("ref").value.trim();
+  const taxaEntrega = parseFloat(document.getElementById("taxaEntrega").value) || 0;
+  const pagamento = document.querySelector("input[name='pag']:checked");
+
+  if (!nome || !endereco || !rua || !ref || !pagamento) {
+    alert("Preencha todos os campos!");
+    return;
+  }
+
+  const total = carrinho.reduce((acc, i) => acc + i.preco, 0) + taxaEntrega;
+  let mensagem = `🍕 *Pedido - Kailan Massas* 🍕\n`;
+  mensagem += `Cliente: ${nome}\nEndereço: ${endereco}, ${rua}\nRef: ${ref}\nPagamento: ${pagamento.value}\n`;
+  mensagem += `────────────────────\n*Itens:*\n`;
+
+  carrinho.forEach((i, idx) => mensagem += `${idx + 1}. ${i.nome} - R$ ${i.preco.toFixed(2)}\n`);
+
+  mensagem += `────────────────────\nEntrega: R$ ${taxaEntrega.toFixed(2)}\n*Total:* R$ ${total.toFixed(2)}\n────────────────────\nObrigado!`;
+
+  const telefone = "559999999999"; // Coloque seu número com DDI+DDD
+  window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`);
 });
 
-document.getElementById("finalizar").addEventListener("click",()=>{
-  if(carrinho.length===0) return alert("Adicione itens antes de finalizar!");
-  dadosCliente.classList.remove("hidden");
-});
-
-document.getElementById("form-dados").addEventListener("submit",e=>{
-  e.preventDefault();
-  dadosCliente.classList.add("hidden");
-  notaSection.classList.remove("hidden");
-  gerarNota();
-});
-
-function gerarNota(){
-  const nome = document.getElementById("nome").value;
-  const endereco = document.getElementById("endereco").value;
-  const rua = document.getElementById("rua").value;
-  const ref = document.getElementById("referencia").value;
-  const pag = document.getElementById("pagamento").value;
-  taxaEntrega = calcularTaxaEntrega();
-  const totalComEntrega = total + taxaEntrega;
-
-  let html = `<p><strong>Cliente:</strong> ${nome}</p>
-  <p><strong>Endereço:</strong> ${endereco}, ${rua}</p>
-  <p><strong>Referência:</strong> ${ref}</p>
-  <p><strong>Pagamento:</strong> ${pag}</p><ul>`;
-  carrinho.forEach((i,idx)=> html+= `<li>${idx+1}. ${i.nome} - R$ ${i.preco.toFixed(2)}</li>`);
-  html+= `</ul><p><strong>Entrega:</strong> R$ ${taxaEntrega.toFixed(2)}</p>
-  <p><strong>Total:</strong> R$ ${totalComEntrega.toFixed(2)}</p>`;
-  notaConteudo.innerHTML = html;
-}
-
-document.getElementById("imprimir").addEventListener("click",()=>window.print());
-
-document.getElementById("enviar").addEventListener("click",()=>{
-  const nome = document.getElementById("nome").value;
-  const endereco = document.getElementById("endereco").value;
-  const rua = document.getElementById("rua").value;
-  const ref = document.getElementById("referencia").value;
-  const pag = document.getElementById("pagamento").value;
-  taxaEntrega = calcularTaxaEntrega();
-  const totalComEntrega = total + taxaEntrega;
-
-  let msg = `🧾 *Comanda Kailan Massas*\n
