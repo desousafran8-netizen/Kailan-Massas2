@@ -1,6 +1,5 @@
 const menu = document.getElementById("menu");
 const carrinho = [];
-let categoriaAtual = "";
 
 const pizzas = {
   tradicionais: [
@@ -18,7 +17,6 @@ const pizzas = {
 document.querySelectorAll(".menu-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const categoria = btn.dataset.categoria;
-    categoriaAtual = categoria;
     mostrarMenu(categoria);
   });
 });
@@ -31,7 +29,7 @@ function mostrarMenu(categoria) {
     card.className = "card";
     card.innerHTML = `
       <h3>Pizza Metade/Metade 🍕</h3>
-      <p>Escolha 2 sabores (pode ser Tradicional ou Especial)</p>
+      <p>Escolha dois sabores (Tradicional ou Especial)</p>
       <button onclick="escolherMetade()">Escolher Sabores</button>
     `;
     menu.appendChild(card);
@@ -117,7 +115,6 @@ document.getElementById("enviarPedido").addEventListener("click", () => {
 
   mensagem += `────────────────────\nEntrega: R$ ${taxaEntrega.toFixed(2)}\n*Total:* R$ ${total.toFixed(2)}\n────────────────────\nObrigado!`;
 
-  const telefone = "559999999999"; // Coloque seu número com DDI+DDD
+  const telefone = "559999999999"; // Substitua pelo número do WhatsApp
   window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`);
 });
-
