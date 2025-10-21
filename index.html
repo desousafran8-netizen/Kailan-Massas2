@@ -7,37 +7,58 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Kailan Massas 🍕</h1>
-    <nav>
-      <button class="menu-btn" data-categoria="tradicionais">Tradicionais</button>
-      <button class="menu-btn" data-categoria="especiais">Especiais</button>
-      <button class="menu-btn" data-categoria="metade">Pizza Metade/Metade</button>
-      <button id="ver-carrinho">🛒 Carrinho</button>
-    </nav>
-  </header>
 
-  <main id="menu"></main>
+<header>
+  <h1>🍕 Kailan Massas 🍔</h1>
+  <nav>
+    <button class="menu-btn" data-category="tradicionais">🍕 Pizzas Tradicionais</button>
+    <button class="menu-btn" data-category="especiais">⭐ Pizzas Especiais</button>
+    <button class="menu-btn" data-category="metade">🧀 Pizza Metade/Metade</button>
+    <button class="menu-btn" data-category="lanches">🍔 Lanches</button>
+    <button class="menu-btn" data-category="salgadinhos">🥟 Salgadinhos</button>
+    <button class="menu-btn" data-category="omeletes">🍳 Omeletes</button>
+    <button class="menu-btn" data-category="bebidas">🥤 Bebidas</button>
+  </nav>
+</header>
 
-  <section id="carrinho-container" class="hidden">
-    <h2>🛍️ Seu Carrinho</h2>
-    <ul id="lista-carrinho"></ul>
-    <p id="total"></p>
-    <label>Taxa de Entrega: <input type="number" id="taxaEntrega" value="5" min="0"></label><br>
-    
-    <h3>Dados do Cliente</h3>
-    <input type="text" id="nome" placeholder="Nome"><br>
-    <input type="text" id="endereco" placeholder="Endereço"><br>
-    <input type="text" id="rua" placeholder="Rua/Bairro"><br>
-    <input type="text" id="ref" placeholder="Referência"><br>
-
-    <h3>Forma de Pagamento</h3>
-    <label><input type="radio" name="pag" value="Dinheiro"> Dinheiro</label>
-    <label><input type="radio" name="pag" value="Pix"> Pix</label><br><br>
-
-    <button id="enviarPedido">Enviar Pedido no WhatsApp</button>
+<main>
+  <section id="menu">
+    <h2>Escolha uma categoria acima 👆</h2>
+    <img id="banner-img" src="https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg" alt="banner" class="banner">
   </section>
 
-  <script src="script.js"></script>
+  <aside id="carrinho">
+    <h2>🛒 Seu Carrinho</h2>
+    <ul id="itens-carrinho"></ul>
+    <p id="total">Total: R$ 0,00</p>
+    <button id="finalizar">Finalizar Pedido</button>
+  </aside>
+</main>
+
+<section id="dados-cliente" class="hidden">
+  <h2>📋 Dados do Cliente</h2>
+  <form id="form-dados">
+    <label>Nome: <input type="text" id="nome" required></label>
+    <label>Endereço: <input type="text" id="endereco" required></label>
+    <label>Rua: <input type="text" id="rua" required></label>
+    <label>Ponto de Referência: <input type="text" id="referencia"></label>
+    <label>Forma de Pagamento:
+      <select id="pagamento" required>
+        <option value="Dinheiro">Dinheiro</option>
+        <option value="Pix">Pix</option>
+      </select>
+    </label>
+    <button type="submit">Gerar Nota</button>
+  </form>
+</section>
+
+<section id="nota" class="hidden">
+  <h2>🧾 Nota do Pedido</h2>
+  <div id="nota-conteudo"></div>
+  <button id="imprimir">🖨️ Imprimir</button>
+  <button id="enviar">💬 Enviar via WhatsApp</button>
+</section>
+
+<script src="script.js"></script>
 </body>
 </html>
