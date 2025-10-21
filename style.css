@@ -1,135 +1,239 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Poppins, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, sans-serif;
 }
 
 body {
-  background: linear-gradient(to bottom right, #fff7e6, #ffe4c4);
-  color: #222;
+    background: linear-gradient(to bottom right, #fff7e6, #ffe4c4);
+    color: #222;
 }
 
 header {
-  background: linear-gradient(90deg, #d62828, #f77f00);
-  color: white;
-  text-align: center;
-  padding: 20px 10px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-  position: sticky;
-  top: 0;
+    background: linear-gradient(90deg, #d62828, #f77f00);
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+}
+
+header h1 {
+    font-size: 2rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .menu-btn {
-  background: #fcbf49;
-  border: none;
-  color: #000;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
+    background: #fcbf49;
+    border: none;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .menu-btn:hover {
-  background: #ffdd57;
-  transform: scale(1.05);
+    background: #ffdd57;
+    transform: scale(1.05);
 }
 
 main {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 20px;
-  gap: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 20px;
 }
 
 .banner {
-  width: 100%;
-  max-height: 200px;
-  border-radius: 10px;
-  margin-top: 15px;
-  object-fit: cover;
+    width: 100%;
+    max-height: 200px;
+    border-radius: 10px;
+    margin-top: 15px;
+    object-fit: cover;
+}
+
+#menu {
+    flex: 2;
+    animation: fadeIn 0.6s ease-in;
 }
 
 .item {
-  background: white;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+}
+
+.item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.item h3 {
+    color: #d62828;
+}
+
+.item strong {
+    color: #f77f00;
 }
 
 .item button {
-  background: #d62828;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
+    background: #d62828;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
 }
 
 .item button:hover {
-  background: #f77f00;
-  transform: scale(1.05);
+    background: #f77f00;
+    transform: scale(1.05);
+}
+
+.item select {
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 #carrinho {
-  flex: 1;
-  background: #fff3cd;
-  padding: 15px;
-  border-radius: 10px;
+    flex: 1;
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    align-self: flex-start; /* Fixa o carrinho no topo */
+}
+
+#itens-carrinho li {
+    list-style: none;
+    padding: 5px 0;
+    border-bottom: 1px dashed #f77f0055;
+    font-size: 0.9em;
 }
 
 #finalizar {
-  background: #f77f00;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  width: 100%;
-  margin-top: 10px;
-  cursor: pointer;
+    background: #f77f00;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#finalizar:hover {
+    background: #d62828;
+    transform: scale(1.05);
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
-#dados-cliente, #nota {
-  background: white;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+#dados-cliente,
+#nota {
+    background: white;
+    padding: 20px;
+    margin: 20px auto; /* Centraliza */
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 #dados-cliente label {
-  display: block;
-  margin-bottom: 10px;
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
-#dados-cliente input, select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+#dados-cliente input,
+#dados-cliente select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
 }
 
-#dados-cliente button {
-  background: #d62828;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  cursor: pointer;
+#dados-cliente button,
+#nota button {
+    background: #d62828;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+
+#dados-cliente button:hover,
+#nota button:hover {
+    background: #f77f00;
+    transform: scale(1.05);
+}
+
+#nota-conteudo ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+#nota-conteudo li {
+    padding: 3px 0;
+    border-bottom: 1px dotted #ccc;
+}
+
+#nota-conteudo p strong {
+    color: #d62828;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+
+    #carrinho {
+        order: -1; /* Coloca o carrinho no topo em telas pequenas */
+        width: 100%;
+    }
+
+    #menu {
+        flex: auto;
+    }
 }
