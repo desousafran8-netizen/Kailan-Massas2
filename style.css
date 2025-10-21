@@ -48,6 +48,27 @@ nav {
 .menu-btn:hover {
   background: #ffdd57;
   transform: scale(1.05);
+} 
+/* Mantém todo o CSS anterior */
+
+.meioameio-container {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.meioameio-container label {
+  display: block;
+  margin: 5px 0;
+}
+
+.meioameio-container select {
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 main {
@@ -180,3 +201,4 @@ main {
   main { flex-direction: column; }
   #carrinho { order: -1; }
 }
+
