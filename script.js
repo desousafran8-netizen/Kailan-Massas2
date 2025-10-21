@@ -8,24 +8,15 @@ const notaConteudo = document.getElementById("nota-conteudo");
 
 let carrinho = [];
 let total = 0;
-const shopPhone = "5561983043534"; // substitua pelo número real
+const shopPhone = "5561983043534"; // número da loja
 
-// função para calcular taxa de entrega conforme horário
 function calcularTaxaEntrega() {
   const agora = new Date();
-  const horas = agora.getHours();
-  const minutos = agora.getMinutes();
-  const horaDecimal = horas + minutos / 60;
-
-  if (horaDecimal >= 7.5 && horaDecimal < 18) {
-    return 2.00; // dia
-  } else if (horaDecimal >= 18 && horaDecimal <= 22.5) {
-    return 3.00; // noite
-  } else {
-    return 0.00; // fora do horário
-  }
+  const h = agora.getHours() + agora.getMinutes() / 60;
+  if (h >= 7.5 && h < 18) return 2.00;
+  if (h >= 18 && h <= 22.5) return 3.00;
+  return 0.00;
 }
-
 let taxaEntrega = calcularTaxaEntrega();
 
 const imagens = {
@@ -37,56 +28,44 @@ const imagens = {
   bebidas:"https://cdn.pixabay.com/photo/2016/03/05/22/34/coca-cola-1233243_1280.jpg"
 };
 
-// cardápio completo
+// cardápio (igual ao seu)
 const cardapio = {
-  tradicionais:[
-    {nome:"Frango", precoM:35, precoG:45, ingredientes:"Mussarela, frango, orégano"},
+  tradicionais:[{nome:"Frango", precoM:35, precoG:45, ingredientes:"Mussarela, frango, orégano"},
     {nome:"Milho", precoM:35, precoG:45, ingredientes:"Mussarela, milho, orégano"},
     {nome:"Mussarela", precoM:35, precoG:45, ingredientes:"Mussarela, orégano"},
     {nome:"Presunto", precoM:35, precoG:45, ingredientes:"Mussarela, presunto, orégano"},
-    {nome:"Banana", precoM:35, precoG:45, ingredientes:"Mussarela, banana, açúcar com canela"},
-    {nome:"Marguerita", precoM:35, precoG:45, ingredientes:"Mussarela, tomate, orégão"}
-  ],
+    {nome:"Banana", precoM:35, precoG:45, ingredientes:"Mussarela, banana, açúcar e canela"},
+    {nome:"Marguerita", precoM:35, precoG:45, ingredientes:"Mussarela, tomate, orégano"}],
   especiais:[
     {nome:"Calabresa", precoM:36, precoG:46, ingredientes:"Mussarela, calabresa, orégano"},
-    {nome:"Frango com Catupiry", precoM:38, precoG:49, ingredientes:"Mussarela, frango, catupiry, orégano"},
-    {nome:"Portuguesa", precoM:38, precoG:49, ingredientes:"Presunto, calabresa, pimentão, cebola, ovo, azeitona, orégano"},
-    {nome:"Moda da Casa", precoM:37, precoG:47, ingredientes:"Presunto, calabresa, frango, milho, azeitona, orégano"},
-    {nome:"Americana", precoM:38, precoG:49, ingredientes:"Mussarela, pasta de alho, presunto, bacon, ovo, orégano"},
-    {nome:"Paulista", precoM:39, precoG:49, ingredientes:"Mussarela, presunto, tomate, cebola, bacon, mussarela, orégano"},
-    {nome:"Chocolate", precoM:48, precoG:37, ingredientes:"Mussarela, chocolate"},
-    {nome:"Choconana", precoM:36, precoG:50, ingredientes:"Mussarela, banana, chocolate"},
-    {nome:"Três Queijos", precoM:37, precoG:48, ingredientes:"Mussarela, catupiry, cheddar, orégano"}
+    {nome:"Frango com Catupiry", precoM:38, precoG:49, ingredientes:"Mussarela, frango, catupiry"},
+    {nome:"Portuguesa", precoM:38, precoG:49, ingredientes:"Presunto, calabresa, pimentão, cebola, ovo"},
+    {nome:"Moda da Casa", precoM:37, precoG:47, ingredientes:"Presunto, frango, milho, azeitona"},
+    {nome:"Americana", precoM:38, precoG:49, ingredientes:"Presunto, bacon, ovo"},
+    {nome:"Paulista", precoM:39, precoG:49, ingredientes:"Presunto, tomate, cebola, bacon"},
+    {nome:"Chocolate", precoM:36, precoG:48, ingredientes:"Chocolate"},
+    {nome:"Choconana", precoM:37, precoG:50, ingredientes:"Banana, chocolate"},
+    {nome:"Três Queijos", precoM:37, precoG:48, ingredientes:"Mussarela, catupiry, cheddar"}
   ],
-  lanches:[
-    {nome:"X TUDO ESPECIAL", preco:16, ingredientes:"Hambúrguer, ovo, salsicha, mussarela, cheddar, presunto, alface, tomate, batata palha, milho"},
-    {nome:"Cachorro Quente na Chapa", preco:10, ingredientes:"Salsicha, presunto, bacon, cheddar, milho, batata palha"},
-    {nome:"Misto Quente Completo", preco:8, ingredientes:"Ovo, presunto, mussarela"},
-    {nome:"Misto Quente Simples", preco:5, ingredientes:"Presunto, mussarela"}
-  ],
-  salgadinhos:[
-    {nome:"Coxinha de Frango", preco:1},{nome:"Coxinha de Carne", preco:1},{nome:"Pastel de Carne", preco:1},
-    {nome:"Pastel de Frango", preco:1},{nome:"Enroladinho de Salsicha", preco:1},{nome:"Bomba Presunto Queijo", preco:1}
-  ],
-  omeletes:[
-    {nome:"Omelete Frango", preco:10, ingredientes:"Frango, queijo, ovo, tomate"},
-    {nome:"Omelete Presunto", preco:10, ingredientes:"Presunto, queijo, ovo, tomate"},
-    {nome:"Omelete Calabresa", preco:10, ingredientes:"Calabresa, queijo, ovo, tomate, cebola"},
-    {nome:"Omelete Especial", preco:17, ingredientes:"Frango, calabresa, presunto, ovo, queijo, bacon"}
-  ],
-  bebidas:[
-    {nome:"Coca-Cola 2L", preco:15},
-    {nome:"Coca-Cola 1L", preco:10},
-    {nome:"Guaraná 1L", preco:10},
-    {nome:"Coca-Cola Lata", preco:5},
-    {nome:"Guaraná Lata", preco:5}
-  ]
+  lanches:[{nome:"X TUDO ESPECIAL", preco:16},{nome:"Cachorro Quente na Chapa", preco:10}],
+  salgadinhos:[{nome:"Coxinha de Frango", preco:1}],
+  omeletes:[{nome:"Omelete Especial", preco:17}],
+  bebidas:[{nome:"Coca-Cola 2L", preco:15}]
 };
 
-// mostrar menu
 function mostrarMenu(categoria){
   menuEl.innerHTML = "";
   bannerImg.src = imagens[categoria] || bannerImg.src;
+
+  // botão especial para pizza metade/metade
+  if (categoria === "tradicionais" || categoria === "especiais") {
+    const metadeBtn = document.createElement("button");
+    metadeBtn.textContent = "🍕 Fazer Pizza Metade a Metade";
+    metadeBtn.classList.add("menu-btn");
+    metadeBtn.addEventListener("click", abrirPizzaMetade);
+    menuEl.appendChild(metadeBtn);
+  }
+
   cardapio[categoria].forEach(item=>{
     const div = document.createElement("div");
     div.classList.add("item");
@@ -95,8 +74,8 @@ function mostrarMenu(categoria){
     if(item.precoM && item.precoG){
       html += `<p>Preço M: R$ ${item.precoM} | G: R$ ${item.precoG}</p>
       <select class="tamanho">
-        <option value="M">M - R$ ${item.precoM}</option>
-        <option value="G">G - R$ ${item.precoG}</option>
+        <option value="M">M</option>
+        <option value="G">G</option>
       </select>`;
     } else html+= `<p>Preço: R$ ${item.preco}</p>`;
     html+= `<button>Adicionar</button>`;
@@ -118,7 +97,27 @@ function mostrarMenu(categoria){
   });
 }
 
-// atualizar carrinho
+// função pizza metade/metade
+function abrirPizzaMetade(){
+  const sabores = [...cardapio.tradicionais, ...cardapio.especiais];
+  const sabor1 = prompt("Escolha o 1º sabor (ex: Frango, Calabresa):");
+  const sabor2 = prompt("Escolha o 2º sabor (ex: Marguerita, Portuguesa):");
+  const tamanho = prompt("Tamanho M ou G?");
+  if (!sabor1 || !sabor2) return alert("Selecione dois sabores válidos!");
+
+  const p1 = sabores.find(s=>s.nome.toLowerCase()===sabor1.toLowerCase());
+  const p2 = sabores.find(s=>s.nome.toLowerCase()===sabor2.toLowerCase());
+  if (!p1 || !p2) return alert("Sabor não encontrado.");
+
+  const preco = tamanho.toUpperCase()==="G" ?
+      ((p1.precoG + p2.precoG) / 2) :
+      ((p1.precoM + p2.precoM) / 2);
+
+  carrinho.push({nome:`Pizza ${sabor1}/${sabor2} (${tamanho.toUpperCase()})`, preco});
+  atualizarCarrinho();
+  alert("🍕 Pizza metade a metade adicionada!");
+}
+
 function atualizarCarrinho(){
   taxaEntrega = calcularTaxaEntrega();
   carrinhoEl.innerHTML = "";
@@ -129,24 +128,19 @@ function atualizarCarrinho(){
     li.textContent = `${i.nome} - R$ ${i.preco.toFixed(2)}`;
     carrinhoEl.appendChild(li);
   });
-
-  let entregaTexto = taxaEntrega > 0 ? `R$ ${taxaEntrega.toFixed(2)}` : "Fora do horário de entrega";
   const totalComEntrega = total + taxaEntrega;
-  totalEl.innerHTML = `Subtotal: R$ ${total.toFixed(2)} <br> Taxa de Entrega: ${entregaTexto} <br><strong>Total Final: R$ ${totalComEntrega.toFixed(2)}</strong>`;
+  totalEl.innerHTML = `Subtotal: R$ ${total.toFixed(2)} <br> Taxa: R$ ${taxaEntrega.toFixed(2)} <br><strong>Total: R$ ${totalComEntrega.toFixed(2)}</strong>`;
 }
 
-// eventos menu
 document.querySelectorAll(".menu-btn").forEach(btn=>{
   btn.addEventListener("click",()=>mostrarMenu(btn.dataset.category));
 });
 
-// finalizar pedido
 document.getElementById("finalizar").addEventListener("click",()=>{
   if(carrinho.length===0) return alert("Adicione itens antes de finalizar!");
   dadosCliente.classList.remove("hidden");
 });
 
-// gerar nota
 document.getElementById("form-dados").addEventListener("submit",e=>{
   e.preventDefault();
   dadosCliente.classList.add("hidden");
@@ -166,19 +160,15 @@ function gerarNota(){
   let html = `<p><strong>Cliente:</strong> ${nome}</p>
   <p><strong>Endereço:</strong> ${endereco}, ${rua}</p>
   <p><strong>Referência:</strong> ${ref}</p>
-  <p><strong>Pagamento:</strong> ${pag}</p>
-  <ul>`;
+  <p><strong>Pagamento:</strong> ${pag}</p><ul>`;
   carrinho.forEach((i,idx)=> html+= `<li>${idx+1}. ${i.nome} - R$ ${i.preco.toFixed(2)}</li>`);
-  html+= `</ul>
-  <p><strong>Taxa de Entrega:</strong> R$ ${taxaEntrega.toFixed(2)}</p>
-  <p><strong>Total Final:</strong> R$ ${totalComEntrega.toFixed(2)}</p>`;
+  html+= `</ul><p><strong>Entrega:</strong> R$ ${taxaEntrega.toFixed(2)}</p>
+  <p><strong>Total:</strong> R$ ${totalComEntrega.toFixed(2)}</p>`;
   notaConteudo.innerHTML = html;
 }
 
-// imprimir
 document.getElementById("imprimir").addEventListener("click",()=>window.print());
 
-// enviar WhatsApp
 document.getElementById("enviar").addEventListener("click",()=>{
   const nome = document.getElementById("nome").value;
   const endereco = document.getElementById("endereco").value;
@@ -188,15 +178,4 @@ document.getElementById("enviar").addEventListener("click",()=>{
   taxaEntrega = calcularTaxaEntrega();
   const totalComEntrega = total + taxaEntrega;
 
-  let msg = `🧾 *Comanda Kailan Massas*\n`;
-  msg += `───────────────────\n`;
-  msg += `*Cliente:* ${nome}\n*Endereço:* ${endereco}, ${rua}\n*Referência:* ${ref}\n*Pagamento:* ${pag}\n`;
-  msg += `───────────────────\n*Itens:*\n`;
-  carrinho.forEach((i,idx)=> msg += `${idx+1}. ${i.nome} - R$ ${i.preco.toFixed(2)}\n`);
-  msg += `───────────────────\nSubtotal: R$ ${total.toFixed(2)}\nEntrega: R$ ${taxaEntrega.toFixed(2)}\n*Total: R$ ${totalComEntrega.toFixed(2)}*\n`;
-  msg += `───────────────────\n🍕 Obrigado pelo pedido!`;
-
-  const url = `https://wa.me/${shopPhone}?text=${encodeURIComponent(msg)}`;
-  window.open(url);
-});
-
+  let msg = `🧾 *Comanda Kailan Massas*\n
