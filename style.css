@@ -38,4 +38,3 @@ main { display:flex; justify-content:space-between; flex-wrap:wrap; padding:20px
 
 @keyframes fadeIn { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
 @media(max-width:768px){ main{flex-direction:column;} #carrinho{order:-1;} }
-
